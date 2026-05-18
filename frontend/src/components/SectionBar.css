@@ -1,0 +1,116 @@
+.sectionbar {
+  position: fixed;
+  top: 32px;
+  left: 0;
+  right: 0;
+  height: 28px;
+  z-index: 99;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border-dim);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--sp-4);
+  gap: var(--sp-4);
+  font-family: var(--font-mono);
+  user-select: none;
+}
+
+.sectionbar__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--text-2xs);
+  flex-shrink: 0;
+  min-width: 220px;
+}
+
+.sectionbar__crumb {
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+}
+
+.sectionbar__crumb-sep {
+  color: var(--text-disabled);
+}
+
+.sectionbar__crumb.active {
+  color: var(--green);
+}
+
+.sectionbar__status {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-2xs);
+  letter-spacing: 0.06em;
+  gap: 6px;
+}
+
+.sectionbar__status-idle {
+  color: var(--text-tertiary);
+}
+
+.sectionbar__blink {
+  color: var(--text-tertiary);
+  animation: blink 1s step-end infinite;
+}
+
+.sectionbar__status-scanning {
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sectionbar__status-module {
+  color: var(--text-secondary);
+}
+
+.sectionbar__dots {
+  letter-spacing: 0.1em;
+  animation: blink 1.2s step-end infinite;
+}
+
+.sectionbar__status-complete {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-2xs);
+}
+
+.sectionbar__status-complete-text {
+  color: var(--text-secondary);
+}
+
+.sectionbar__status-level {
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.sectionbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+  min-width: 220px;
+  justify-content: flex-end;
+}
+
+.sectionbar__btn {
+  font-size: var(--text-2xs);
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  padding: 2px 10px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-sm);
+  color: var(--text-tertiary);
+  background: transparent;
+  cursor: pointer;
+  transition: var(--t-fast);
+}
+
+.sectionbar__btn:hover {
+  border-color: var(--green);
+  color: var(--green);
+}

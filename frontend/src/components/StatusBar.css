@@ -1,0 +1,92 @@
+.statusbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  z-index: 100;
+  background: var(--bg-void);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--sp-4);
+  gap: var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.06em;
+  overflow: hidden;
+}
+
+.statusbar__left {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.statusbar__static {
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.statusbar__marquee-wrap {
+  overflow: hidden;
+  flex: 1;
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.statusbar__marquee {
+  display: inline-flex;
+  gap: 0;
+  white-space: nowrap;
+  animation: marquee 22s linear infinite;
+}
+
+.statusbar__marquee-text {
+  color: var(--text-tertiary);
+  padding-right: 80px;
+}
+
+.statusbar__marquee-text .highlight {
+  color: var(--green);
+}
+
+.statusbar__complete {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.statusbar__complete-level {
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.statusbar__center {
+  color: var(--text-disabled);
+  flex-shrink: 0;
+  letter-spacing: 0.08em;
+}
+
+.statusbar__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+}
+
+.statusbar__right-item {
+  letter-spacing: 0.06em;
+}
+
+.statusbar__right-sep {
+  color: var(--text-disabled);
+}
+
+.statusbar__findings-count {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}

@@ -1,0 +1,71 @@
+.perm-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.perm-matrix__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.perm-matrix__group-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+.perm-matrix__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.perm-matrix__pill {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-full);
+  border: 1px solid;
+  letter-spacing: 0.02em;
+  cursor: default;
+  transition: var(--transition-fast);
+}
+
+.perm-matrix__pill:hover {
+  filter: brightness(1.2);
+}
+
+.perm-matrix__combos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.perm-matrix__combo-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  background: rgba(255, 69, 58, 0.06);
+  border: 1px solid rgba(255, 69, 58, 0.18);
+  border-radius: var(--radius-md);
+}
+
+.perm-matrix__combo-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--sev-critical);
+}
+
+.perm-matrix__combo-detail {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}

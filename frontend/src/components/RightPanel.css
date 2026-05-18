@@ -1,0 +1,37 @@
+.rightpanel {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 320px;
+  height: calc(100vh - 84px);
+  background: var(--bg-panel);
+  border-left: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  z-index: 90;
+  overflow: hidden;
+}
+
+.rightpanel__section {
+  padding: 10px 12px;
+  flex-shrink: 0;
+}
+
+.rightpanel__section--bar {
+  border-bottom: 1px solid var(--border-dim);
+  height: 160px;
+}
+
+.rightpanel__section--line {
+  border-bottom: 1px solid var(--border-dim);
+  height: 140px;
+}
+
+.rightpanel__section--chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+  min-height: 0;
+}

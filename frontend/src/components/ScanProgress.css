@@ -1,0 +1,126 @@
+.scan-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 560px;
+  gap: var(--sp-4);
+}
+
+.scan-progress__heading {
+  text-align: center;
+}
+
+.scan-progress__title {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  font-family: var(--font-mono);
+  display: block;
+  margin-bottom: var(--sp-2);
+}
+
+.scan-progress__app {
+  font-size: var(--text-xl);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.scan-progress__modules {
+  width: 100%;
+  border: 1px solid var(--border-dim);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.scan-progress__row {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 var(--sp-4);
+  gap: var(--sp-3);
+  border-bottom: 1px solid var(--border-dim);
+  transition: background var(--t-fast);
+}
+
+.scan-progress__row:last-child {
+  border-bottom: none;
+}
+
+.scan-progress__row.running {
+  background: var(--bg-hover);
+  border-left: 2px solid var(--green);
+  padding-left: calc(var(--sp-4) - 2px);
+}
+
+.scan-progress__row.done {
+  opacity: 0.7;
+}
+
+.scan-progress__index {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  width: 24px;
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+
+.scan-progress__name {
+  flex: 1;
+  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+}
+
+.scan-progress__row.done .scan-progress__name {
+  color: var(--text-secondary);
+}
+
+.scan-progress__status {
+  font-size: var(--text-2xs);
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.scan-progress__status.queued  { color: var(--text-disabled); }
+.scan-progress__status.running { color: var(--sev-high); }
+.scan-progress__status.done    { color: var(--green); }
+
+.scan-progress__run-pulse {
+  display: inline-block;
+  animation: pulse-dot 1s infinite;
+}
+
+.scan-progress__bar-wrap {
+  width: 100%;
+}
+
+.scan-progress__bar-track {
+  width: 100%;
+  height: 2px;
+  background: var(--border-dim);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.scan-progress__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--cyan));
+  border-radius: 1px;
+  transition: width 400ms cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 8px var(--green);
+}
+
+.scan-progress__timer {
+  font-size: var(--text-sm);
+  color: var(--green);
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+}
