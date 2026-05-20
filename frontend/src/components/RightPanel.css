@@ -5,33 +5,78 @@
   width: 320px;
   height: calc(100vh - 84px);
   background: var(--bg-panel);
-  border-left: 1px solid var(--border-subtle);
+  border-left: 1px solid rgba(0,255,136,0.15);
+  box-shadow: -4px 0 24px rgba(0,255,136,0.04);
   display: flex;
   flex-direction: column;
   z-index: 90;
   overflow: hidden;
 }
 
-.rightpanel__section {
-  padding: 10px 12px;
+/* ── Collapsible chart sections ─────────────────────────────────────────────── */
+.rightpanel__chart {
   flex-shrink: 0;
-}
-
-.rightpanel__section--bar {
+  overflow: hidden;
+  height: 120px;
+  transition: height 250ms cubic-bezier(0.4,0,0.2,1);
   border-bottom: 1px solid var(--border-dim);
-  height: 160px;
 }
 
-.rightpanel__section--line {
-  border-bottom: 1px solid var(--border-dim);
-  height: 140px;
+.rightpanel__chart:last-of-type {
+  height: 110px;
 }
 
-.rightpanel__section--chat {
+.rightpanel__chart.collapsed {
+  height: 32px;
+}
+
+.rightpanel__chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  padding: 0 var(--sp-3);
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+  transition: background var(--t-fast);
+}
+
+.rightpanel__chart-header:hover {
+  background: var(--bg-hover);
+}
+
+.rightpanel__chart-title {
+  font-size: var(--text-2xs);
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.rightpanel__chart-toggle {
+  font-size: var(--text-2xs);
+  color: var(--text-disabled);
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  transition: color var(--t-fast);
+}
+
+.rightpanel__chart-header:hover .rightpanel__chart-toggle {
+  color: var(--green);
+}
+
+.rightpanel__chart-body {
+  padding: 0 var(--sp-3) var(--sp-2);
+  overflow: hidden;
+}
+
+/* ── AI Chat focal section ───────────────────────────────────────────────────── */
+.rightpanel__chat {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding: 0;
-  min-height: 0;
+  min-height: 300px;
+  background: linear-gradient(180deg, rgba(0,255,136,0.06) 0%, transparent 60px);
+  border-top: 1px solid rgba(0,255,136,0.15);
 }

@@ -152,7 +152,7 @@ export default function MainContent({ appState, scanData, activeModule, scanId, 
       <main className="main-content">
         <div className="main-content__empty">
           <div className="main-content__scanline" />
-          <span className="main-content__empty-wordmark">APPCHECK</span>
+          <span className="main-content__empty-wordmark">AppEX</span>
           <span className="main-content__empty-sub">NO TARGET LOADED</span>
           <span className="main-content__empty-hint">
             Drop an APK file in the left panel to begin static analysis
@@ -323,7 +323,7 @@ export default function MainContent({ appState, scanData, activeModule, scanId, 
                   ['SCAN ID',    scanData.scan_id      ?? '—'],
                   ['DURATION',   duration],
                   ['MODULES',    '6 / 6 COMPLETE'],
-                  ['ENGINE',     'APPCHECK v1.0.0'],
+                  ['ENGINE',     'AppEX v1.0.0'],
                   ['AI MODEL',   'GROQ LLAMA-3.3-70B'],
                   ['TIMESTAMP',  scanDate],
                 ].map(([k, v]) => (

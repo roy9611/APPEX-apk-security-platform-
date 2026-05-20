@@ -13,31 +13,115 @@ from models import ModuleResult, ScanResult
 
 _SEVERITY_ORDER = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"]
 
-# Normalisation baseline: a scan with ~300 raw weight points maps to 100%
-_SCORE_NORMALISE_DIVISOR = 300
+# Maximum raw points each module can contribute (prevents noisy modules dominating)
+_MODULE_CAPS = {
+    "manifest":    60,
+    "yara":        55,
+    "ssl":         50,
+    "firebase":    45,
+    "secrets":     40,
+    "storage":     30,
+    "permissions": 25,
+}
+_DEFAULT_MODULE_CAP = 20
+
+# High-signal confirmed-critical rule titles — get a 2× multiplier
+_CONFIRMED_CRITICAL_KEYWORDS = [
+    "debuggable", "trustmanager", "hostnameVerifier",
+    "aws", "private key", "firebase", "sms exfiltration",
+]
+
+# Effective normalisation baseline — anchored so that a 3-module fully-exploitable
+# scan (manifest+ssl+secrets at max multiplier + context bonuses) maps to ~70/100.
+# sum of top-5 module caps (60+55+50+45+40) = 250
+_MAX_RAW = 250
+
+
+def _finding_multiplier(finding) -> float:
+    """Return the weight multiplier for a single finding."""
+    title    = (finding.get("title", "")    if isinstance(finding, dict) else finding.title).lower()
+    sev      = (finding.get("severity", "") if isinstance(finding, dict) else finding.severity).upper()
+    evidence = (finding.get("evidence", "") if isinstance(finding, dict) else finding.evidence).lower()
+
+    # INFO findings contribute nothing
+    if sev == "INFO" or "permission summary" in title:
+        return 0.0
+
+    # Entropy findings are very noisy — heavily discounted
+    if "entropy" in evidence or "entropy" in title:
+        return 0.1
+
+    # YARA-confirmed findings are high-signal
+    if "yara rule" in evidence:
+        # Confirmed critical exploits get a further boost
+        if sev == "CRITICAL" and any(kw in title for kw in _CONFIRMED_CRITICAL_KEYWORDS):
+            return 2.0
+        return 1.5
+
+    # Non-YARA confirmed criticals still get a boost
+    if sev == "CRITICAL" and any(kw in title for kw in _CONFIRMED_CRITICAL_KEYWORDS):
+        return 2.0
+
+    return 1.0
 
 
 def calculate_risk_score(all_results: dict) -> tuple:
     """
-    Sums SEVERITY_WEIGHTS for every finding across all module results.
-    Normalises the raw sum to an integer 0-100 score.
-    Maps score to a risk level label.
-    Returns (int score, str level).
+    Smart scoring: per-module weight caps + finding-type multipliers + context bonuses.
+    Normalises to 0-100. Returns (int score, str level).
     """
-    raw_score = 0
+    total = 0.0
 
-    for module_result in all_results.values():
+    # Collect module-level data for context bonus checks
+    module_findings: dict[str, list] = {}
+
+    for module_name, module_result in all_results.items():
         if isinstance(module_result, dict):
             findings = module_result.get("findings", [])
-            for finding in findings:
-                sev = finding.get("severity", "INFO") if isinstance(finding, dict) else finding.severity
-                raw_score += config.SEVERITY_WEIGHTS.get(sev, 0)
         else:
-            for finding in module_result.findings:
-                raw_score += config.SEVERITY_WEIGHTS.get(finding.severity, 0)
+            findings = module_result.findings
 
-    # Normalise to 0-100; cap at 100
-    normalised = min(100, int((raw_score / _SCORE_NORMALISE_DIVISOR) * 100))
+        module_findings[module_name] = findings
+
+        raw = sum(
+            config.SEVERITY_WEIGHTS.get(
+                f.get("severity", "INFO") if isinstance(f, dict) else f.severity, 0
+            ) * _finding_multiplier(f)
+            for f in findings
+        )
+        cap = _MODULE_CAPS.get(module_name, _DEFAULT_MODULE_CAP)
+        total += min(raw, cap)
+
+    # ── Context bonuses ───────────────────────────────────────────────────────
+
+    def _has_title_keyword(module: str, *keywords: str) -> bool:
+        for f in module_findings.get(module, []):
+            t = (f.get("title", "") if isinstance(f, dict) else f.title).lower()
+            if any(kw in t for kw in keywords):
+                return True
+        return False
+
+    def _has_sev(module: str, sev: str) -> bool:
+        for f in module_findings.get(module, []):
+            s = f.get("severity", "") if isinstance(f, dict) else f.severity
+            if s == sev:
+                return True
+        return False
+
+    # Debuggable + exposed creds = extremely dangerous
+    if _has_title_keyword("manifest", "debuggable") and _has_sev("secrets", "CRITICAL"):
+        total += 15
+
+    # TLS bypass is directly exploitable
+    if _has_title_keyword("ssl", "trustmanager", "hostnameVerifier"):
+        total += 10
+
+    # Strong malware indicators
+    if _has_title_keyword("yara", "sms exfiltration", "accessibility abuse"):
+        total += 20
+
+    # ── Normalise to 0-100 ────────────────────────────────────────────────────
+    normalised = min(100, int((total / _MAX_RAW) * 100))
 
     if normalised >= 75:
         level = "CRITICAL"

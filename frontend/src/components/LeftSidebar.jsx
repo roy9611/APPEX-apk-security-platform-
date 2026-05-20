@@ -24,6 +24,7 @@ const MODULES = [
   { key: 'firebase',    label: 'FIREBASE' },
   { key: 'ssl',         label: 'SSL / TLS' },
   { key: 'storage',     label: 'STORAGE' },
+  { key: 'yara',        label: 'YARA SCAN' },
 ]
 
 function useCountUp(target, duration = 1000) {

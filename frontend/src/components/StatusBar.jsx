@@ -24,7 +24,7 @@ export default function StatusBar({ appState, scanData }) {
       <div className="statusbar__left">
         {appState === 'empty' && (
           <span className="statusbar__static">
-            APPCHECK STATIC ANALYSIS ENGINE · READY
+            AppEX STATIC ANALYSIS ENGINE · READY
           </span>
         )}
 
@@ -70,7 +70,7 @@ export default function StatusBar({ appState, scanData }) {
         )}
       </div>
 
-      <span className="statusbar__center">APPCHECK v1.0.0</span>
+      <span className="statusbar__center">AppEX v1.0.0</span>
 
       <div className="statusbar__right">
         <span className="statusbar__right-item">PYTHON 3.14</span>

@@ -9,6 +9,7 @@ const MODULES = [
   { key: 'firebase',    label: 'FIREBASE CHECK' },
   { key: 'ssl',         label: 'SSL / TLS AUDIT' },
   { key: 'storage',     label: 'STORAGE ANALYSIS' },
+  { key: 'yara',        label: 'YARA RULE SCAN' },
   { key: 'ai',          label: 'AI RISK REPORT' },
 ]
 

@@ -1,6 +1,27 @@
+import { useState } from 'react'
 import { BarChart, LineGraph } from './Charts.jsx'
 import AIChat from './AIChat.jsx'
 import './RightPanel.css'
+
+function ChartSection({ label, children, defaultCollapsed = true }) {
+  const [collapsed, setCollapsed] = useState(defaultCollapsed)
+
+  return (
+    <div className={`rightpanel__chart${collapsed ? ' collapsed' : ''}`}>
+      <div className="rightpanel__chart-header" onClick={() => setCollapsed(c => !c)}>
+        <span className="rightpanel__chart-title">
+          {collapsed ? '▶' : '▼'} {label}
+        </span>
+        <span className="rightpanel__chart-toggle">
+          {collapsed ? 'expand' : 'collapse'}
+        </span>
+      </div>
+      <div className="rightpanel__chart-body">
+        {children}
+      </div>
+    </div>
+  )
+}
 
 export default function RightPanel({
   scanData, appState, scanId,
@@ -8,15 +29,15 @@ export default function RightPanel({
 }) {
   return (
     <div className="rightpanel">
-      <div className="rightpanel__section rightpanel__section--bar">
+      <ChartSection label="FINDINGS BY MODULE" defaultCollapsed={true}>
         <BarChart scanData={appState === 'complete' ? scanData : null} />
-      </div>
+      </ChartSection>
 
-      <div className="rightpanel__section rightpanel__section--line">
+      <ChartSection label="SEVERITY DISTRIBUTION" defaultCollapsed={true}>
         <LineGraph scanData={appState === 'complete' ? scanData : null} />
-      </div>
+      </ChartSection>
 
-      <div className="rightpanel__section rightpanel__section--chat">
+      <div className="rightpanel__chat">
         <AIChat
           scanId={scanId}
           scanData={scanData}

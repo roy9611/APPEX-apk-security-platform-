@@ -1,3 +1,18 @@
+@keyframes header-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(0,255,136,0); }
+  50%       { box-shadow: 0 2px 12px rgba(0,255,136,0.15); }
+}
+
+@keyframes analyst-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+@keyframes send-glow {
+  0%, 100% { box-shadow: 0 0 12px rgba(0,255,136,0.4); }
+  50%       { box-shadow: 0 0 20px rgba(0,255,136,0.7); }
+}
+
 .aichat {
   flex: 1;
   display: flex;
@@ -6,21 +21,25 @@
   min-height: 0;
 }
 
+/* ── Header ─────────────────────────────────────────────────────────────────── */
 .aichat__header {
-  height: 28px;
+  height: 32px;
   display: flex;
   align-items: center;
   padding: 0 var(--sp-3);
   gap: var(--sp-2);
-  border-bottom: 1px solid var(--border-dim);
+  background: rgba(0,255,136,0.08);
+  border-bottom: 1px solid rgba(0,255,136,0.2);
+  animation: header-glow 3s infinite ease-in-out;
   flex-shrink: 0;
 }
 
 .aichat__header-label {
   font-size: var(--text-xs);
-  letter-spacing: 0.08em;
-  color: var(--text-secondary);
+  letter-spacing: 0.12em;
+  color: var(--green);
   font-family: var(--font-mono);
+  font-weight: 700;
   flex: 1;
 }
 
@@ -51,6 +70,7 @@
   border: none !important;
 }
 
+/* ── Messages area ──────────────────────────────────────────────────────────── */
 .aichat__messages {
   flex: 1;
   overflow-y: auto;
@@ -60,20 +80,29 @@
   gap: var(--sp-2);
 }
 
+/* ── Offline / empty state ──────────────────────────────────────────────────── */
 .aichat__offline {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
-  gap: var(--sp-2);
+  gap: var(--sp-3);
+}
+
+.aichat__offline-icon {
+  color: var(--text-disabled);
+  opacity: 0.4;
+  animation: analyst-pulse 3s infinite ease-in-out;
 }
 
 .aichat__offline-title {
   font-size: var(--text-xs);
-  color: var(--text-disabled);
+  color: var(--green);
   font-family: var(--font-mono);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  animation: analyst-pulse 3s infinite ease-in-out;
 }
 
 .aichat__offline-sub {
@@ -83,6 +112,7 @@
   letter-spacing: 0.06em;
 }
 
+/* ── System boot messages ───────────────────────────────────────────────────── */
 .aichat__system-msg {
   display: flex;
   flex-direction: column;
@@ -100,6 +130,7 @@
   animation: fade-slide-up 200ms forwards;
 }
 
+/* ── Suggestion chips ───────────────────────────────────────────────────────── */
 .aichat__chips {
   display: flex;
   flex-direction: column;
@@ -128,6 +159,7 @@
   color: var(--green);
 }
 
+/* ── Message bubbles ────────────────────────────────────────────────────────── */
 .aichat__msg-user {
   align-self: flex-end;
   max-width: 90%;
@@ -177,6 +209,7 @@
   color: var(--text-secondary);
 }
 
+/* ── Typing indicator ───────────────────────────────────────────────────────── */
 .aichat__typing {
   border-left: 2px solid var(--green);
   padding: 6px 10px;
@@ -189,9 +222,11 @@
   letter-spacing: 0.04em;
 }
 
+/* ── Input area ─────────────────────────────────────────────────────────────── */
 .aichat__input-area {
   height: 52px;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid rgba(0,255,136,0.2);
+  box-shadow: 0 -4px 16px rgba(0,255,136,0.06);
   background: var(--bg-void);
   padding: var(--sp-2);
   display: flex;
@@ -221,7 +256,8 @@
 
 .aichat__input:focus {
   border-color: var(--green);
-  box-shadow: 0 0 0 2px rgba(0,255,136,0.1);
+  box-shadow: 0 0 0 2px rgba(0,255,136,0.2),
+              0 0 16px rgba(0,255,136,0.08);
 }
 
 .aichat__send {
@@ -236,13 +272,14 @@
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
-  transition: background var(--t-fast), color var(--t-fast);
+  transition: background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
 }
 
 .aichat__send.has-text {
   background: var(--green);
   color: var(--bg-void);
   border: none;
+  animation: send-glow 2s infinite ease-in-out;
 }
 
 .aichat__send.empty {
@@ -254,4 +291,5 @@
 .aichat__send:disabled {
   opacity: 0.35;
   cursor: not-allowed;
+  animation: none;
 }

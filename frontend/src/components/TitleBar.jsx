@@ -28,7 +28,7 @@ export default function TitleBar({ isBackendOnline, scanData, appState, activeTa
     const url  = URL.createObjectURL(blob)
     const a    = document.createElement('a')
     a.href     = url
-    a.download = `appcheck-${scanData.scan_id ?? 'report'}.json`
+    a.download = `appex-${scanData.scan_id ?? 'report'}.json`
     a.click()
     URL.revokeObjectURL(url)
   }
@@ -45,12 +45,12 @@ export default function TitleBar({ isBackendOnline, scanData, appState, activeTa
           />
           <path d="M5.5 8l1.8 1.8 3.2-3.2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
-        <span className="titlebar__brand-name">APPCHECK</span>
+        <span className="titlebar__brand-name">AppEX</span>
         <span className="titlebar__brand-version">v1.0.0</span>
       </div>
 
       <div className="titlebar__divider" />
-      <span className="titlebar__subtitle">APK SECURITY INTELLIGENCE ENGINE</span>
+      <span className="titlebar__subtitle">ANDROID APPLICATION EXPOSURE ENGINE</span>
 
       <nav className="titlebar__nav">
         {TABS.map(tab => (

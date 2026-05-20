@@ -22,7 +22,7 @@ export default function SectionBar({ appState, scanData, onNewScan }) {
     const url  = URL.createObjectURL(blob)
     const a    = document.createElement('a')
     a.href     = url
-    a.download = `appcheck-${scanData.scan_id ?? 'report'}.json`
+    a.download = `appex-${scanData.scan_id ?? 'report'}.json`
     a.click()
     URL.revokeObjectURL(url)
   }
@@ -37,7 +37,7 @@ export default function SectionBar({ appState, scanData, onNewScan }) {
   return (
     <div className="sectionbar">
       <div className="sectionbar__breadcrumb">
-        <span className="sectionbar__crumb">APPCHECK</span>
+        <span className="sectionbar__crumb">AppEX</span>
         <span className="sectionbar__crumb-sep">›</span>
         <span className="sectionbar__crumb">STATIC ANALYSIS</span>
         <span className="sectionbar__crumb-sep">›</span>

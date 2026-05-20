@@ -20,7 +20,7 @@ function buildInitialLines(scanData) {
   const total = Object.values(scanData.findings ?? {})
     .reduce((s, m) => s + (m?.findings?.length ?? 0), 0)
   return [
-    '► APPCHECK ANALYST ONLINE',
+    '► AppEX ANALYST ONLINE',
     `► TARGET: ${scanData.app_name ?? 'UNKNOWN'}`,
     `► RISK LEVEL: ${scanData.risk_level ?? '—'} (${scanData.risk_score ?? 0}/100)`,
     `► ${total} FINDINGS DETECTED`,
@@ -110,6 +110,14 @@ export default function AIChat({ scanId, scanData, appState, externalMessage, on
       <div className="aichat__messages">
         {!isActive ? (
           <div className="aichat__offline">
+            <svg className="aichat__offline-icon" width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <rect x="4" y="16" width="40" height="24" rx="3" stroke="currentColor" strokeWidth="1.5"/>
+              <path d="M14 16V12a10 10 0 0 1 20 0v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              <circle cx="18" cy="28" r="2.5" fill="currentColor"/>
+              <circle cx="30" cy="28" r="2.5" fill="currentColor"/>
+              <path d="M18 33c1.5 1.5 10.5 1.5 12 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              <path d="M4 28h4M40 28h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
             <span className="aichat__offline-title">ANALYST OFFLINE</span>
             <span className="aichat__offline-sub">SUBMIT SCAN TO ACTIVATE</span>
           </div>
