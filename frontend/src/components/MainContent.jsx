@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import ScanProgress from './ScanProgress.jsx'
 import FindingCard from './FindingCard.jsx'
 import PermissionMatrix from './PermissionMatrix.jsx'
+import AIChat from './AIChat.jsx'
 import './MainContent.css'
 
 const MODULE_ORDER = ['manifest','permissions','secrets','firebase','ssl','storage','yara','crypto','webview']
@@ -205,7 +206,7 @@ function ModuleSection({ index, moduleKey, mod, activeFilter, sendToChat, scroll
   )
 }
 
-export default function MainContent({ appState, scanData, activeModule, scanId, sendToChat }) {
+export default function MainContent({ appState, scanData, activeModule, scanId, sendToChat, externalMessage, onExternalMessageHandled }) {
   const moduleRefs = useRef({})
   const [activeFilter, setActiveFilter] = useState('ALL')
 
@@ -367,8 +368,18 @@ export default function MainContent({ appState, scanData, activeModule, scanId, 
 
         {/* 04 · INTELLIGENCE */}
         <section id="intelligence">
-          <div className="section-label">// INTELLIGENCE SUMMARY</div>
-          <div className="intelligence-grid">
+          <div className="section-label">// AI ANALYST CHAT</div>
+          <div className="intelligence-chat">
+            <AIChat
+              scanId={scanId}
+              scanData={scanData}
+              appState={appState}
+              externalMessage={externalMessage}
+              onExternalMessageHandled={onExternalMessageHandled}
+            />
+          </div>
+
+          <div className="intelligence-grid" style={{ marginTop: 24 }}>
             <div>
               <div className="section-label">// PERMISSION RISK MATRIX</div>
               {findings.permissions
@@ -384,7 +395,7 @@ export default function MainContent({ appState, scanData, activeModule, scanId, 
                   ['PACKAGE',    scanData.package_name ?? '—'],
                   ['SCAN ID',    scanData.scan_id      ?? '—'],
                   ['DURATION',   duration],
-                  ['MODULES',    '6 / 6 COMPLETE'],
+                  ['MODULES',    `${presentModules.length} / ${presentModules.length} COMPLETE`],
                   ['ENGINE',     'AppEX v1.0.0'],
                   ['AI MODEL',   'GROQ LLAMA-3.3-70B'],
                   ['TIMESTAMP',  scanDate],

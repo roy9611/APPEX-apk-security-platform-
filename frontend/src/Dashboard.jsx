@@ -188,13 +188,12 @@ export default function Dashboard() {
         activeModule={activeModule}
         scanId={scanId}
         sendToChat={sendToChat}
+        externalMessage={externalMsg}
+        onExternalMessageHandled={handleExternalHandled}
       />
       <RightPanel
         scanData={scanData}
         appState={appState}
-        scanId={scanId}
-        externalMessage={externalMsg}
-        onExternalMessageHandled={handleExternalHandled}
       />
       <StatusBar
         appState={appState}

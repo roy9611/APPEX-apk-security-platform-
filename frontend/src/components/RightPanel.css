@@ -66,13 +66,15 @@
   overflow: hidden;
 }
 
-/* ── AI Chat focal section ───────────────────────────────────────────────────── */
-.rightpanel__chat {
-  flex: 1;
+.rightpanel__heading {
+  height: 32px;
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-height: 300px;
-  background: linear-gradient(180deg, rgba(0,255,136,0.06) 0%, transparent 60px);
-  border-top: 1px solid rgba(0,255,136,0.15);
+  align-items: center;
+  padding: 0 var(--sp-3);
+  font-size: var(--text-2xs);
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid var(--border-dim);
+  flex-shrink: 0;
 }
