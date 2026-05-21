@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { BarChart, LineGraph } from './Charts.jsx'
+import AIChat from './AIChat.jsx'
 import './RightPanel.css'
 
-function ChartSection({ label, children, defaultCollapsed = false }) {
+function ChartSection({ label, children, defaultCollapsed = true }) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed)
 
   return (
@@ -22,17 +23,25 @@ function ChartSection({ label, children, defaultCollapsed = false }) {
   )
 }
 
-export default function RightPanel({ scanData, appState }) {
+export default function RightPanel({ scanData, appState, scanId, externalMessage, onExternalMessageHandled }) {
   const data = appState === 'complete' ? scanData : null
   return (
     <div className="rightpanel">
-      <div className="rightpanel__heading">// SCAN ANALYTICS</div>
-      <ChartSection label="FINDINGS BY MODULE" defaultCollapsed={false}>
+      <ChartSection label="FINDINGS BY MODULE" defaultCollapsed={true}>
         <BarChart scanData={data} />
       </ChartSection>
-      <ChartSection label="SEVERITY DISTRIBUTION" defaultCollapsed={false}>
+      <ChartSection label="SEVERITY DISTRIBUTION" defaultCollapsed={true}>
         <LineGraph scanData={data} />
       </ChartSection>
+      <div className="rightpanel__chat">
+        <AIChat
+          scanId={scanId}
+          scanData={scanData}
+          appState={appState}
+          externalMessage={externalMessage}
+          onExternalMessageHandled={onExternalMessageHandled}
+        />
+      </div>
     </div>
   )
 }
