@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react'
 import ScanProgress from './ScanProgress.jsx'
 import FindingCard from './FindingCard.jsx'
 import PermissionMatrix from './PermissionMatrix.jsx'
-import AIChat from './AIChat.jsx'
 import './MainContent.css'
 
 const MODULE_ORDER = ['manifest','permissions','secrets','firebase','ssl','storage','yara','crypto','webview']
@@ -206,7 +205,7 @@ function ModuleSection({ index, moduleKey, mod, activeFilter, sendToChat, scroll
   )
 }
 
-export default function MainContent({ appState, scanData, activeModule, scanId, sendToChat, externalMessage, onExternalMessageHandled }) {
+export default function MainContent({ appState, scanData, activeModule, scanId, sendToChat }) {
   const moduleRefs = useRef({})
   const [activeFilter, setActiveFilter] = useState('ALL')
 
@@ -368,18 +367,7 @@ export default function MainContent({ appState, scanData, activeModule, scanId, 
 
         {/* 04 · INTELLIGENCE */}
         <section id="intelligence">
-          <div className="section-label">// AI ANALYST CHAT</div>
-          <div className="intelligence-chat">
-            <AIChat
-              scanId={scanId}
-              scanData={scanData}
-              appState={appState}
-              externalMessage={externalMessage}
-              onExternalMessageHandled={onExternalMessageHandled}
-            />
-          </div>
-
-          <div className="intelligence-grid" style={{ marginTop: 24 }}>
+          <div className="intelligence-grid">
             <div>
               <div className="section-label">// PERMISSION RISK MATRIX</div>
               {findings.permissions
